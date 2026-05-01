@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "457024210542",
+    "project_id": "mockmate-af60e",
+    "storage_bucket": "mockmate-af60e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:457024210542:android:d3c597dbf66cbab289c87f",
+        "android_client_info": {
+          "package_name": "com.example.mockmate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCymlep7O4Rzkc0Z6xDTvWsFh-PLl9_EjQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

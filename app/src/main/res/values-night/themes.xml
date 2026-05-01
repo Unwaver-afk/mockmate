@@ -1,0 +1,8 @@
+<resources>
+    <style name="Base.Theme.Mockmate" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:colorAccent">#004497</item>
+        <item name="android:windowBackground">#f7f9fb</item>
+    </style>
+</resources>

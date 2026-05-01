@@ -1,0 +1,239 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Live AI Interview - InterviewMentor</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@500;700;800&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary": "#ffffff",
+                      "outline-variant": "#c2c6d5",
+                      "surface-container-low": "#f2f4f6",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-error": "#ffffff",
+                      "surface-bright": "#f7f9fb",
+                      "primary": "#004497",
+                      "on-primary-fixed-variant": "#004395",
+                      "inverse-primary": "#aec6ff",
+                      "surface-tint": "#005ac3",
+                      "primary-container": "#005bc5",
+                      "secondary-fixed-dim": "#b9c7df",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "tertiary": "#005237",
+                      "tertiary-fixed": "#6ffbbe",
+                      "surface-container-lowest": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-surface": "#191c1e",
+                      "on-secondary-fixed-variant": "#3a485b",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "on-surface-variant": "#424753",
+                      "surface-container": "#eceef0",
+                      "on-primary-fixed": "#001a42",
+                      "secondary": "#515f74",
+                      "surface-variant": "#e0e3e5",
+                      "on-secondary-container": "#57657a",
+                      "secondary-container": "#d5e3fc",
+                      "tertiary-container": "#006d4a",
+                      "primary-fixed": "#d8e2ff",
+                      "surface-dim": "#d8dadc",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "secondary-fixed": "#d5e3fc",
+                      "on-secondary-fixed": "#0d1c2e",
+                      "on-primary": "#ffffff",
+                      "surface-container-high": "#e6e8ea",
+                      "on-primary-container": "#ccdaff",
+                      "inverse-on-surface": "#eff1f3",
+                      "on-tertiary-container": "#65f2b5",
+                      "background": "#f7f9fb",
+                      "outline": "#727784",
+                      "surface": "#f7f9fb",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed": "#002113",
+                      "inverse-surface": "#2d3133",
+                      "on-background": "#191c1e",
+                      "primary-fixed-dim": "#aec6ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "2xl": "1rem",
+                      "3xl": "1.5rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Manrope"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "label": [
+                              "Inter"
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        /* Ambient Shadows & Utilities */
+        .ambient-shadow {
+            box-shadow: 0 12px 32px -4px rgba(25, 28, 30, 0.06);
+        }
+        .bottom-ambient-shadow {
+            box-shadow: 0 -12px 32px -4px rgba(25, 28, 30, 0.04);
+        }
+        .ghost-border:focus-within {
+            outline: 2px solid rgba(0, 90, 195, 0.2); /* surface-tint at 20% */
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body h-screen flex flex-col overflow-hidden antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar (Adapted for Focus Task Mode) -->
+<header class="bg-background w-full z-10 flex justify-between items-center px-6 py-4 max-w-4xl mx-auto flex-shrink-0">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="Student Profile" class="w-full h-full object-cover" data-alt="Professional headshot of a young male student wearing a crisp white button-down shirt against a soft grey background, smiling subtly." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnhKVzBJpLDR2x3FMSFxy8IAhln865yjW4AXxVFRjLipH3W166Bq-_8PeOL5VFoCPhxHJ7q9fdiYeCaxUOa06bzy53ROrQGMXSNiRA7CXWEBzh07Al5ooAcPbjFc2ZNG_PNGZRwef2gBVGl9XN74qhYzLRtmbfGY5Vj-TV5emg7MxtTXju0fToDlHJE28AZIko-geg-xHqY5INzoNVnP7l0OqDfYTJkp4Mlm-VCAqvyvV-UmY5eBsVboC7VkD_oA9wJN_0YtdDspg">
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-medium font-label uppercase tracking-wider text-secondary">Mock Session</span>
+<span class="text-lg font-bold font-headline text-primary">InterviewMentor</span>
+</div>
+</div>
+<!-- Task-Specific Override: End Interview Button instead of Settings -->
+<button class="text-primary dark:text-blue-400 p-2 rounded-full hover:bg-surface-container-high transition-colors mr-2" title="Toggle Dark Mode">
+<span class="material-symbols-outlined">nights_stay</span>
+</button><button class="px-4 py-2 bg-error-container text-on-error-container font-label text-sm rounded-full font-semibold hover:bg-error/20 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">stop_circle</span>
+            End
+        </button>
+</header>
+<!-- Main Live Interview Canvas -->
+<main class="flex-1 flex flex-col max-w-4xl mx-auto w-full relative overflow-hidden">
+<!-- Progress Bar & Metadata -->
+<div class="px-6 py-2 flex-shrink-0">
+<div class="flex justify-between items-end mb-2">
+<span class="font-label text-xs uppercase tracking-wider text-primary font-semibold">Question 3 of 10</span>
+<span class="font-label text-xs text-secondary font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                    04:12 Elapsed
+                </span>
+</div>
+<div class="w-full bg-secondary-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full transition-all duration-500 ease-in-out" style="width: 30%"></div>
+</div>
+</div>
+<!-- Current Question Display (Elevated Focus Card) -->
+<div class="px-6 py-4 flex-shrink-0 z-10">
+<div class="bg-surface-container-lowest p-6 rounded-3xl ambient-shadow border border-outline-variant/10">
+<h2 class="font-headline text-xl md:text-2xl font-bold text-on-surface leading-tight">
+                    "Can you describe a time when you had to manage a project with constantly changing requirements? How did you adapt?"
+                </h2>
+</div>
+</div>
+<!-- Conversational Chat History -->
+<div class="flex-1 overflow-y-auto px-6 py-4 flex flex-col gap-6 hide-scrollbar pb-32">
+<!-- System/Context Marker -->
+<div class="flex justify-center">
+<span class="bg-surface-container-low text-secondary text-xs font-label uppercase tracking-wider px-3 py-1 rounded-full">
+                    Behavioral Section Started
+                </span>
+</div>
+<!-- AI Message 1 -->
+<div class="flex gap-4 items-start w-full max-w-[85%]">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0 mt-1">
+<span class="material-symbols-outlined text-on-primary-container text-[18px]" style="font-variation-settings: &quot;FILL&quot; 1;">robot_2</span>
+</div>
+<div class="bg-surface-container-highest/80 backdrop-blur-xl p-5 rounded-3xl rounded-tl-sm text-body text-[15px] leading-relaxed text-on-surface shadow-sm">
+<p class="">Welcome back. Let's move on to the behavioral portion of the interview. I'll be looking for specific examples from your past experiences.</p>
+</div>
+</div>
+<!-- AI Message 2 (The Question) -->
+<div class="flex gap-4 items-start w-full max-w-[85%]">
+<div class="w-8 h-8 rounded-full bg-transparent flex items-center justify-center flex-shrink-0 mt-1">
+<!-- Empty space for alignment if consecutive messages -->
+</div>
+<div class="bg-surface-container-highest/80 backdrop-blur-xl p-5 rounded-3xl rounded-tl-sm text-body text-[15px] leading-relaxed text-on-surface shadow-sm">
+<p class="">Can you describe a time when you had to manage a project with constantly changing requirements? How did you adapt to ensure the project's success?</p>
+</div>
+</div>
+<!-- User Response -->
+<div class="flex gap-4 items-end justify-end w-full max-w-[85%] self-end">
+<div class="bg-gradient-to-br from-primary to-primary-container p-5 rounded-3xl rounded-br-sm text-body text-[15px] leading-relaxed text-on-primary shadow-md">
+<p class="">Certainly. In my previous role at TechCorp, I was leading the frontend development for our new client portal. Initially, the scope was just to redesign the dashboard. However, midway through, stakeholders decided they also needed a real-time chat feature integrated immediately.</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex-shrink-0 mb-1 overflow-hidden">
+<img alt="Student Profile" class="w-full h-full object-cover" data-alt="Professional headshot of a young male student wearing a crisp white button-down shirt against a soft grey background, smiling subtly." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWqSIaOQuWR6uSeW3hSSEo5z4lgguHOWd_ItTXDiRgtmXHuWKm4DRQKK1ktahNS83zW3x85niDeOX6u1SguHqVjR92eWUgHzk1_Xk8rXEoDoFGlClwBGqmOGw-r6ERuyQ8dhXcZ5lWreT8IxZnqa9uVhwxx4_CHDnwR91RPqj51wgrP548KdRTcoIQRCmheWPodbKhov5nPo-x93aFjk70TGaHM2iR-yzpt1N7_jyjpxLpmz30iH51p0PO5VKxMQ_WojeldZ_GjG8">
+</div>
+</div>
+<!-- AI Status Indicator (Docked at bottom of scroll area) -->
+<div class="flex gap-3 items-center mt-2 px-12">
+<div class="flex gap-1">
+<span class="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style="animation-delay: 0s;"></span>
+<span class="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style="animation-delay: 0.15s;"></span>
+<span class="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style="animation-delay: 0.3s;"></span>
+</div>
+<span class="text-sm font-label text-primary font-medium">AI Interviewer is analyzing...</span>
+</div>
+</div>
+<!-- Floating Input / Voice Area -->
+<div class="absolute bottom-0 left-0 w-full bg-surface-bright/95 backdrop-blur-2xl rounded-t-[2rem] bottom-ambient-shadow px-6 py-6 pb-8 md:pb-6 z-20">
+<div class="max-w-3xl mx-auto flex flex-col gap-4">
+<!-- Voice Action Primary -->
+<div class="flex justify-center -mt-12 mb-2">
+<button class="relative group flex items-center justify-center">
+<!-- Ripple Effect Layers -->
+<div class="absolute inset-0 bg-primary/20 rounded-full scale-[1.5] animate-pulse"></div>
+<div class="absolute inset-0 bg-primary/30 rounded-full scale-[1.25] animate-pulse" style="animation-delay: 0.2s;"></div>
+<!-- Main Button -->
+<div class="relative bg-gradient-to-br from-primary to-primary-container w-20 h-20 rounded-full flex items-center justify-center shadow-[0_8px_24px_-4px_rgba(0,68,151,0.4)] transition-transform transform group-hover:scale-105 active:scale-95">
+<span class="material-symbols-outlined text-on-primary text-[32px]" style="font-variation-settings: &quot;FILL&quot; 1;">mic</span>
+</div>
+</button>
+</div>
+<div class="text-center mb-2">
+<span class="font-label text-sm font-semibold text-primary">Tap to Speak</span>
+</div>
+<!-- Text Fallback Input -->
+<div class="flex items-center gap-3 bg-surface-container-low rounded-2xl p-2 ghost-border transition-all">
+<button class="p-3 text-secondary hover:text-primary transition-colors rounded-xl hover:bg-surface-container-highest">
+<span class="material-symbols-outlined text-[20px]">keyboard</span>
+</button>
+<input class="flex-1 bg-transparent border-none outline-none text-body text-on-surface placeholder:text-secondary/70 text-[15px] focus:ring-0 px-2 py-3" placeholder="Or type your response here..." type="text">
+<button class="p-3 bg-primary-fixed text-on-primary-fixed rounded-xl hover:bg-primary-fixed-dim transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">send</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+
+
+</body></html>

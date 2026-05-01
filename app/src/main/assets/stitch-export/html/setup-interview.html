@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InterviewMentor - Configure Session</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c2c6d5",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "primary": "#004497",
+                        "on-primary-fixed-variant": "#004395",
+                        "inverse-primary": "#aec6ff",
+                        "surface-tint": "#005ac3",
+                        "primary-container": "#005bc5",
+                        "secondary-fixed-dim": "#b9c7df",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "tertiary": "#005237",
+                        "tertiary-fixed": "#6ffbbe",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#191c1e",
+                        "on-secondary-fixed-variant": "#3a485b",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-surface-variant": "#424753",
+                        "surface-container": "#eceef0",
+                        "on-primary-fixed": "#001a42",
+                        "secondary": "#515f74",
+                        "surface-variant": "#e0e3e5",
+                        "on-secondary-container": "#57657a",
+                        "secondary-container": "#d5e3fc",
+                        "tertiary-container": "#006d4a",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-dim": "#d8dadc",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#d5e3fc",
+                        "on-secondary-fixed": "#0d1c2e",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary-container": "#ccdaff",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-tertiary-container": "#65f2b5",
+                        "background": "#f7f9fb",
+                        "outline": "#727784",
+                        "surface": "#f7f9fb",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#002113",
+                        "inverse-surface": "#2d3133",
+                        "on-background": "#191c1e",
+                        "primary-fixed-dim": "#aec6ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {},
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6, .font-headline { font-family: 'Manrope', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- TopAppBar Shared Component -->
+<header class="docked full-width top-0 bg-[#f7f9fb] dark:bg-slate-950 flat no-shadows z-40 sticky">
+<div class="flex justify-between items-center w-full px-6 py-3 max-w-7xl mx-auto">
+<div class="flex items-center gap-3">
+<img alt="Student Profile" class="w-10 h-10 rounded-full" data-alt="professional headshot of a young student smiling warmly against a clean light background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXb_d1zKuXygeSr0v_xDiVZVGh0qvvdJOwknY3H_UKChSNmupoPArt2DJLOxtkaSGuNgXFrz34jHGqyGRfJote0xXdnH-evONQONmSP_LhVdudTfKz5Oi8adrEpSaz-_v3K9xpTeL22IB3SMKRjYzR-9m5kAA9uhjpQOXTulII-GLo3XcUvZJ4TgD48XD79fYXH_GQ5R_W3yy0UirG4QtK4pJZrOjpSRu1psdGxHEk-k3Jh4Dvk3ktuvx_6sH0w8e1rvbU6A_XI4s"/>
+</div>
+<div class="text-xl font-bold text-[#005BC5] dark:text-blue-400 font-manrope">
+                InterviewMentor
+            </div>
+<button class="text-[#005BC5] dark:text-blue-400 p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" title="Toggle Dark Mode"><span class="material-symbols-outlined">nights_stay</span></button><button class="text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<main class="max-w-5xl mx-auto px-6 py-10 lg:py-16">
+<!-- Intentional Asymmetry Header Area -->
+<div class="flex flex-col lg:flex-row gap-12 mb-16 relative">
+<div class="lg:w-3/5">
+<h1 class="text-[2.5rem] lg:text-[3.5rem] font-headline font-extrabold leading-tight tracking-tight text-on-background mb-4">
+                    Calibrate your <br/><span class="text-primary">environment.</span>
+</h1>
+<p class="font-body text-lg text-on-surface-variant max-w-lg leading-relaxed">
+                    Select your target parameters to generate a highly tailored, role-specific mock interview experience.
+                </p>
+</div>
+<!-- Floating AI Mentor Tip (Glassmorphism) -->
+<div class="lg:absolute lg:right-0 lg:top-8 lg:w-80 bg-surface-bright/60 backdrop-blur-2xl rounded-[1.5rem] p-6 shadow-[0_12px_32px_-4px_rgba(25,28,30,0.06)] z-10 border border-outline-variant/15">
+<div class="flex items-start gap-4">
+<div class="bg-secondary-container text-primary rounded-full p-2 flex-shrink-0 mt-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-on-surface mb-1 text-sm uppercase tracking-widest text-primary">Mentor Tip</h3>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed">
+                            Focusing your target company allows the AI to adapt its questioning style to match that organization's known interview culture.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Configuration Sections -->
+<div class="space-y-16 max-w-3xl">
+<!-- Section 1: Target Company -->
+<section class="space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary font-headline font-bold text-sm">1</div>
+<h2 class="font-headline text-2xl font-bold text-on-background">Target Company</h2>
+</div>
+<!-- Search Input -->
+<div class="relative w-full max-w-md">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline">search</span>
+</div>
+<input class="w-full bg-surface-container-low text-on-surface placeholder:text-outline border-none rounded-xl py-4 pl-12 pr-4 focus:ring-0 focus:bg-surface-container-lowest font-body text-base outline-none shadow-sm transition-all shadow-[inset_0_0_0_2px_rgba(0,90,195,0)] focus:shadow-[inset_0_0_0_2px_rgba(0,90,195,0.2)]" placeholder="Search thousands of companies..." type="text"/>
+</div>
+<!-- Company Grid (Bento Style) -->
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4 pt-2">
+<button class="bg-surface-container-lowest aspect-square rounded-[1.25rem] flex flex-col items-center justify-center gap-3 p-4 shadow-[0_4px_20px_-4px_rgba(25,28,30,0.04)] focus:outline-none hover:-translate-y-1 transition-transform relative group">
+<img alt="Google Logo Placeholder" class="w-12 h-12 object-cover rounded-full bg-surface-container-low" data-alt="minimalist abstract geometric logo resembling a colorful letter G on a clean white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFB-_aXy24E9nTUOshLTWoiHTwqJ36Dd3C6wn4tNmobFpQQ0pvD7jH1yWVChJtMHv7YnTuKEQPMC1C2aTP4StpRI-ZCG1p8FNee3mDNzhhfnAnnhjz0Q9PJlJdA5f5LSJr9Zi_xlNBKoEWZCJMqQiBr4eOnmnIB5w-VnfMK1lEyD-QuSe17LkH8Ny-6aWS_j3K6qBFFefMw2pWBQVd8Y_Nhu9aND3R3u0jWAu0hlVKqsZ9TeHYXh9ebHv1nwcDnH3wCJuakTlBc9s"/>
+<span class="font-label text-xs font-semibold text-on-surface">Google</span>
+</button>
+<button class="bg-surface-container-lowest aspect-square rounded-[1.25rem] flex flex-col items-center justify-center gap-3 p-4 shadow-[0_4px_20px_-4px_rgba(25,28,30,0.04)] focus:outline-none hover:-translate-y-1 transition-transform relative ring-2 ring-primary bg-primary/5">
+<img alt="Amazon Logo Placeholder" class="w-12 h-12 object-cover rounded-full bg-surface-container-low" data-alt="simple sleek curved arrow resembling a smile on a stark white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWtBZZe8o9yhsEgh2fwfJYllq9SXtzyrzt0XucbWZ9rcd4icZBe5Cz6WhgI2JYTBxhdOg0JzPDDWfZ2t0HnBnjzGBONdFRvAJstQvwBsx2_gyjifhx4uVMWi_ZGMfzeUbYRDZZIctc1OUu9NvlhRI7N59tvD424aQ1xmod_Fat-dCZ1n3D4JZvEZ9AGCQ5jP0T4i5MbB6cQ0Tbq6OFOMHFy3TlQbVqDDzfq9s95Lj45xl3xVnyw9Ikwmb-vI0ZybUpiPwj9FAjt9E"/>
+<span class="font-label text-xs font-semibold text-primary">Amazon</span>
+<div class="absolute top-2 right-2 bg-primary text-on-primary rounded-full p-0.5">
+<span class="material-symbols-outlined text-[12px] font-bold">check</span>
+</div>
+</button>
+<button class="bg-surface-container-lowest aspect-square rounded-[1.25rem] flex flex-col items-center justify-center gap-3 p-4 shadow-[0_4px_20px_-4px_rgba(25,28,30,0.04)] focus:outline-none hover:-translate-y-1 transition-transform relative group">
+<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary flex items-center justify-center font-headline font-bold text-lg">T</div>
+<span class="font-label text-xs font-semibold text-on-surface">TCS</span>
+</button>
+<button class="bg-surface-container-lowest aspect-square rounded-[1.25rem] flex flex-col items-center justify-center gap-3 p-4 shadow-[0_4px_20px_-4px_rgba(25,28,30,0.04)] focus:outline-none hover:-translate-y-1 transition-transform relative group">
+<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary flex items-center justify-center font-headline font-bold text-lg">I</div>
+<span class="font-label text-xs font-semibold text-on-surface">Infosys</span>
+</button>
+<button class="bg-surface-container-lowest aspect-square rounded-[1.25rem] flex flex-col items-center justify-center gap-3 p-4 shadow-[0_4px_20px_-4px_rgba(25,28,30,0.04)] focus:outline-none hover:-translate-y-1 transition-transform relative group">
+<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary flex items-center justify-center font-headline font-bold text-lg">W</div>
+<span class="font-label text-xs font-semibold text-on-surface">Wipro</span>
+</button>
+</div>
+</section>
+<!-- Section 2: Role Selection -->
+<section class="space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary font-headline font-bold text-sm">2</div>
+<h2 class="font-headline text-2xl font-bold text-on-background">Target Role</h2>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="px-6 py-3 rounded-full bg-gradient-to-br from-primary to-primary-container text-on-primary shadow-[0_8px_16px_-4px_rgba(0,91,197,0.3)] font-label font-medium text-sm focus:outline-none">
+                        SDE
+                    </button>
+<button class="px-6 py-3 rounded-full bg-surface-container-low text-on-surface-variant font-label font-medium text-sm hover:bg-surface-container-highest transition-colors focus:outline-none">
+                        Data Analyst
+                    </button>
+<button class="px-6 py-3 rounded-full bg-surface-container-low text-on-surface-variant font-label font-medium text-sm hover:bg-surface-container-highest transition-colors focus:outline-none">
+                        Business Analyst
+                    </button>
+</div>
+</section>
+<!-- Section 3: Difficulty / Experience Level -->
+<section class="space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary font-headline font-bold text-sm">3</div>
+<h2 class="font-headline text-2xl font-bold text-on-background">Experience Level</h2>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="px-6 py-3 rounded-full bg-gradient-to-br from-primary to-primary-container text-on-primary shadow-[0_8px_16px_-4px_rgba(0,91,197,0.3)] font-label font-medium text-sm focus:outline-none">
+                        Fresher
+                    </button>
+<button class="px-6 py-3 rounded-full bg-surface-container-low text-on-surface-variant font-label font-medium text-sm hover:bg-surface-container-highest transition-colors focus:outline-none">
+                        1-year exp
+                    </button>
+<button class="px-6 py-3 rounded-full bg-surface-container-low text-on-surface-variant font-label font-medium text-sm hover:bg-surface-container-highest transition-colors focus:outline-none">
+                        Internship
+                    </button>
+</div>
+</section>
+<!-- Primary Action -->
+<div class="pt-8">
+<button class="w-full md:w-auto md:min-w-[320px] px-8 py-5 rounded-[1.25rem] bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-extrabold text-lg shadow-[0_16px_32px_-8px_rgba(0,91,197,0.4)] flex items-center justify-center gap-3 hover:opacity-95 transition-opacity focus:outline-none">
+                    Start Interview
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Shared Component -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-[0_-4px_24px_rgba(25,28,30,0.04)] rounded-t-3xl md:hidden">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1.5 hover:text-[#005BC5] dark:hover:text-blue-300" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1.5 hover:text-[#005BC5] dark:hover:text-blue-300" href="#">
+<span class="material-symbols-outlined mb-1">work</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight">Browse</span>
+</a>
+<!-- Active State: Interview -->
+<a class="flex flex-col items-center justify-center bg-[#f2f4f6] dark:bg-blue-900/30 text-[#005BC5] dark:text-blue-300 rounded-2xl px-4 py-1.5 scale-90 duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">mic</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight">Interview</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1.5 hover:text-[#005BC5] dark:hover:text-blue-300" href="#">
+<span class="material-symbols-outlined mb-1">analytics</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight">Reports</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1.5 hover:text-[#005BC5] dark:hover:text-blue-300" href="#">
+<span class="material-symbols-outlined mb-1">leaderboard</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight">Rankings</span>
+</a>
+</nav>
+</body></html>

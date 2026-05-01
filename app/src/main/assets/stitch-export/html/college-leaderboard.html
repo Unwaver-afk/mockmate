@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>College Leaderboard - InterviewMentor</title>
+<!-- Google Fonts: Manrope & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Design System Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#c2c6d5",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#f7f9fb",
+                    "primary": "#004497",
+                    "on-primary-fixed-variant": "#004395",
+                    "inverse-primary": "#aec6ff",
+                    "surface-tint": "#005ac3",
+                    "primary-container": "#005bc5",
+                    "secondary-fixed-dim": "#b9c7df",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "tertiary": "#005237",
+                    "tertiary-fixed": "#6ffbbe",
+                    "surface-container-lowest": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed-variant": "#3a485b",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-surface-variant": "#424753",
+                    "surface-container": "#eceef0",
+                    "on-primary-fixed": "#001a42",
+                    "secondary": "#515f74",
+                    "surface-variant": "#e0e3e5",
+                    "on-secondary-container": "#57657a",
+                    "secondary-container": "#d5e3fc",
+                    "tertiary-container": "#006d4a",
+                    "primary-fixed": "#d8e2ff",
+                    "surface-dim": "#d8dadc",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#d5e3fc",
+                    "on-secondary-fixed": "#0d1c2e",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e6e8ea",
+                    "on-primary-container": "#ccdaff",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-tertiary-container": "#65f2b5",
+                    "background": "#f7f9fb",
+                    "outline": "#727784",
+                    "surface": "#f7f9fb",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#002113",
+                    "inverse-surface": "#2d3133",
+                    "on-background": "#191c1e",
+                    "primary-fixed-dim": "#aec6ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope", "sans-serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["Inter", "sans-serif"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body antialiased min-h-screen flex flex-col">
+<!-- TopAppBar (Desktop Only via md:flex) -->
+<header class="sticky top-0 z-40 w-full bg-surface/80 backdrop-blur-md border-b border-outline-variant/30">
+<div class="flex justify-between items-center w-full px-4 md:px-8 py-3 max-w-7xl mx-auto">
+<!-- Logo Section -->
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl font-bold" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="text-xl font-bold font-headline tracking-tight">InterviewMentor</span>
+</div>
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex gap-1 items-center bg-surface-container-low p-1 rounded-xl">
+<a class="px-4 py-2 rounded-lg text-sm font-semibold text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all" href="#">Home</a>
+<a class="px-4 py-2 rounded-lg text-sm font-semibold text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all" href="#">Browse</a>
+<a class="px-4 py-2 rounded-lg text-sm font-semibold text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all" href="#">Interview</a>
+<a class="px-4 py-2 rounded-lg text-sm font-semibold text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all" href="#">Reports</a>
+<a class="px-4 py-2 rounded-lg text-sm font-bold text-primary bg-surface-container-lowest shadow-sm" href="#">Rankings</a>
+</nav>
+<!-- Actions Section -->
+<div class="flex items-center gap-2 md:gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors" title="Toggle Dark Mode">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 0, 'wght' 400;">dark_mode</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors" title="Settings">
+<span class="material-symbols-outlined text-[22px]">settings</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant/30 mx-1 hidden md:block"></div>
+<button class="flex items-center gap-2 pl-1">
+<img alt="Student Profile" class="w-9 h-9 rounded-full object-cover ring-2 ring-primary/10 shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLPI38k_IRpfFQhC3j8Fw9Exy1BJn5YL3lfhdMeyjmvtPpQyYsOs2JaPKa9WQypWrxvMBkxll5Ynz6Ef2YGZ7bMULkh3m9LOiTI59KIhiHA-iSN7LDrix0b8hUTT93Rkc9RXVEDrY-amSn5TeJJbg7j0EcBPGhWnEr3ke5GfhwtjC09yPyPFPfPOJPNKv3XDxm5vBAZpchTGNoQcYHhyKLxR99VPM6wvOGVANTG2GDlANanJ0LwpDxXDuSDHz_Auf9zci7bcKkou0"/>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-10 pb-28 md:pb-12 flex flex-col gap-8 md:mt-0">
+<!-- Hero & Status Section (Intentional Asymmetry) -->
+<section class="flex flex-col md:flex-row gap-8 items-start md:items-center">
+<div class="flex-1">
+<h1 class="text-4xl md:text-5xl font-headline font-extrabold text-on-surface mb-3 tracking-tight" style="">College Leaderboard</h1>
+<p class="text-lg md:text-xl text-tertiary-container font-medium max-w-lg leading-relaxed" style="">
+                    Keep it up! You're in the top 15% this week. Your consistency is paying off.
+                </p>
+</div>
+<!-- Elevated Status Card (Surface-Container-Lowest against Background) -->
+<div class="bg-surface-container-lowest rounded-3xl p-6 shadow-[0_12px_32px_-4px_rgba(25,28,30,0.06)] relative overflow-hidden group w-full md:w-auto min-w-[280px]">
+<!-- "Success Glow" -->
+<div class="absolute -top-12 -right-12 w-40 h-40 bg-tertiary-fixed/20 rounded-full blur-3xl pointer-events-none"></div>
+<p class="text-label text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2" style="">Your Current Rank</p>
+<div class="flex items-baseline gap-2 mb-4">
+<span class="text-6xl font-headline font-extrabold text-primary" style="">#42</span>
+<span class="text-lg font-medium text-on-surface-variant" style="">/ 350</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-3 flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant" style="">Weekly Score</span>
+<span class="text-base font-bold text-on-surface" style="">8,450 pts</span>
+</div>
+</div>
+</section>
+<!-- Leaderboard List Section -->
+<section class="flex flex-col gap-6">
+<!-- Header & Filters (No borders, using surface contrast) -->
+<div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-surface-container-low p-2 rounded-2xl">
+<div class="flex items-center gap-2 pl-3">
+<span class="material-symbols-outlined text-primary" data-weight="fill" style='font-variation-settings: "FILL" 1;'>emoji_events</span>
+<h2 class="text-lg font-headline font-bold text-on-surface" style="">Top Scorers</h2>
+</div>
+<!-- Segmented Control Filter -->
+<div class="flex items-center bg-surface-container rounded-xl p-1">
+<button class="px-5 py-2 rounded-lg bg-surface-container-lowest text-primary font-semibold text-sm shadow-[0_2px_8px_-2px_rgba(25,28,30,0.05)] transition-all" style="">Weekly</button>
+<button class="px-5 py-2 rounded-lg text-on-surface-variant font-medium text-sm hover:text-on-surface transition-all" style="">Monthly</button>
+</div>
+</div>
+<!-- List Container (Tonal Layering) -->
+<div class="flex flex-col gap-3">
+<!-- Rank 1 Card (Highlighted with subtle gradient/lift) -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 flex items-center gap-4 shadow-[0_8px_24px_-4px_rgba(25,28,30,0.04)] relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-primary-container"></div>
+<div class="w-12 h-12 flex items-center justify-center font-headline font-bold text-xl text-primary" style="">1</div>
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container shrink-0">
+<img alt="Sarah J." class="w-full h-full object-cover" data-alt="Portrait of a smiling young woman with dark hair, professional headshot style, softly blurred background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCp9Y4SFQ5DI_FyNVb2bQYNIBYXtScQtO6Ll3Sna_1y2GP9n398OvNaQXVjAZWwIelCrRHNu5Vfd11EXaSxWRkGZPGojL1j9prd-m3rP4pzQlKcmdw8SKZgU3vz3dJHyiRJ1E7HM4pab-EJS8a3SlTUOwkYIeUm2zO-YBpMuW7Ip6Tf8-93rRMaTEY0NjdYV2DxoyVpZ4JhqCv_DltocPoeNLR8OQnXsuVd0SsiYvWs2KDDkTLhzAYbLfBa5hX35tjqSi0Aj4ykyhw" style=""/>
+</div>
+<div class="flex-1">
+<h3 class="text-base font-bold text-on-surface" style="">Sarah J.</h3>
+<p class="text-sm text-on-surface-variant" style="">Computer Science</p>
+</div>
+<div class="text-right">
+<span class="block text-lg font-bold text-primary" style="">12,400</span>
+<span class="block text-xs font-medium text-on-surface-variant uppercase tracking-wider" style="">PTS</span>
+</div>
+</div>
+<!-- Rank 2 Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 flex items-center gap-4 hover:shadow-[0_8px_24px_-4px_rgba(25,28,30,0.04)] transition-shadow">
+<div class="w-12 h-12 flex items-center justify-center font-headline font-bold text-lg text-on-surface-variant" style="">2</div>
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container shrink-0">
+<img alt="David M." class="w-full h-full object-cover" data-alt="Portrait of a young man with glasses looking confident, bright daylight lighting, urban out-of-focus background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6DsTENiSxdLJH0_OfAxdtIGNMwbVxsoy0JW2A9_XqW98ur0pT2bFpg4gxykPoyXnuHHcMo39LWMNCBhRW9Ematbbeg3aD4U4vAMuU2mtlJZFashgVeSRnu8FJSs3guVz3x92xhxqnCnb19LgqqRZa9oQncFzoBcWvqetZ2CpPguzAYk3t4DgaV7quNe4tFOfiEnzcWph54kSHyAqHu4jGj_6eLXn52MZsoSUnXoT05G2pmPqb2bm8eV9Ty2x9f1zg_1pDAGRc1NY" style=""/>
+</div>
+<div class="flex-1">
+<h3 class="text-base font-bold text-on-surface" style="">David M.</h3>
+<p class="text-sm text-on-surface-variant" style="">Business Admin</p>
+</div>
+<div class="text-right">
+<span class="block text-lg font-bold text-on-surface" style="">11,850</span>
+<span class="block text-xs font-medium text-on-surface-variant uppercase tracking-wider" style="">PTS</span>
+</div>
+</div>
+<!-- Rank 3 Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 flex items-center gap-4 hover:shadow-[0_8px_24px_-4px_rgba(25,28,30,0.04)] transition-shadow">
+<div class="w-12 h-12 flex items-center justify-center font-headline font-bold text-lg text-on-surface-variant" style="">3</div>
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container shrink-0">
+<img alt="Emily R." class="w-full h-full object-cover" data-alt="Close-up portrait of a young woman with a slight smile, natural lighting, wearing a light blue top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD85H26nwcZJePG8lTcAIPKUWOW-U1HoHF-K5k755pLpMn8ulNYI-PyGuaAY4HWlOpNKm17AaxrNi4SO9f6bu0_Mx5HFfevIM5xoblQcu_Y7xVLdaDw9OEAoRd5O5XAUcdfpD-LDpqc6optiGcV1PkXfXt2rzT8UFNNXVmVKYtIvO-EQlltcFImqkMCGBCwJM88FeidJFxi5BaeHXr3qvejUAThQe3cJ7t9TQm-apwXbwtFi9j3xsJv0p5JkIiTMtL1dCB19mtWFWc" style=""/>
+</div>
+<div class="flex-1">
+<h3 class="text-base font-bold text-on-surface" style="">Emily R.</h3>
+<p class="text-sm text-on-surface-variant" style="">Engineering</p>
+</div>
+<div class="text-right">
+<span class="block text-lg font-bold text-on-surface" style="">11,200</span>
+<span class="block text-xs font-medium text-on-surface-variant uppercase tracking-wider" style="">PTS</span>
+</div>
+</div>
+<!-- Divider / Gap for Ellipsis -->
+<div class="py-2 flex justify-center">
+<span class="material-symbols-outlined text-outline-variant" style="">more_vert</span>
+</div>
+<!-- User's Card (Highlighted explicitly) -->
+<div class="bg-primary-fixed rounded-2xl p-4 flex items-center gap-4 border border-primary-fixed-dim shadow-sm">
+<div class="w-12 h-12 flex items-center justify-center font-headline font-bold text-lg text-on-primary-fixed" style="">42</div>
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container shrink-0 outline outline-2 outline-primary-container outline-offset-2">
+<img alt="Student Profile" class="w-full h-full object-cover" data-alt="Portrait of a young male student smiling casually, well-lit studio lighting with a neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBhnGIfmkd-Kkg76JMeCYftZKfX4xZDmbSkJK-CJDCo35AM3PutYaEE0D86aAlVuECbRtzddKVeHIlWjJZJ_YDIehKkngwbNrfhWw9v6ozAe_K3Cs0_Vr_Z56lgNFyBti93g0eS2O3BlBrCyF6u3WrEQj_1KTbVYRg2yihsITgdxLC3cgqQCX2qZ6Xz0hUKnMouAT6KBtYPk9uv_B6rtHFB3WYU8GUglb1YHMCkY7EK3yXnmkuCK3l1t8ttt8YR0U9iVQ4ZoCmI30" style=""/>
+</div>
+<div class="flex-1">
+<h3 class="text-base font-bold text-on-primary-fixed" style="">You</h3>
+<p class="text-sm text-on-primary-fixed-variant" style="">Information Systems</p>
+</div>
+<div class="text-right">
+<span class="block text-lg font-bold text-primary" style="">8,450</span>
+<span class="block text-xs font-medium text-on-primary-fixed-variant uppercase tracking-wider" style="">PTS</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only via md:hidden) -->
+<nav class="md:hidden bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl docked full-width bottom-0 rounded-t-3xl shadow-[0_-4px_24px_rgba(25,28,30,0.04)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3">
+<!-- Home (Inactive) -->
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1.5 hover:text-[#005BC5] dark:hover:text-blue-300 transition-colors" style="">
+<span class="material-symbols-outlined mb-1" style="">dashboard</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight" style="">Home</span>
+</button>
+<!-- Browse (Inactive) -->
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1.5 hover:text-[#005BC5] dark:hover:text-blue-300 transition-colors" style="">
+<span class="material-symbols-outlined mb-1" style="">work</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight" style="">Browse</span>
+</button>
+<!-- Interview (Inactive) -->
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1.5 hover:text-[#005BC5] dark:hover:text-blue-300 transition-colors" style="">
+<span class="material-symbols-outlined mb-1" style="">mic</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight" style="">Interview</span>
+</button>
+<!-- Reports (Inactive) -->
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1.5 hover:text-[#005BC5] dark:hover:text-blue-300 transition-colors" style="">
+<span class="material-symbols-outlined mb-1" style="">analytics</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight" style="">Reports</span>
+</button>
+<!-- Rankings (Active State) -->
+<button class="flex flex-col items-center justify-center bg-[#f2f4f6] dark:bg-blue-900/30 text-[#005BC5] dark:text-blue-300 rounded-2xl px-4 py-1.5 scale-90 transition-transform transition-colors" style="">
+<span class="material-symbols-outlined mb-1" data-weight="fill" style='font-variation-settings: "FILL" 1;'>leaderboard</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight" style="">Rankings</span>
+</button>
+</nav>
+</body></html>

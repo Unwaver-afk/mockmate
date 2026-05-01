@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Post-Interview Report</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#c2c6d5",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#f7f9fb",
+                    "primary": "#004497",
+                    "on-primary-fixed-variant": "#004395",
+                    "inverse-primary": "#aec6ff",
+                    "surface-tint": "#005ac3",
+                    "primary-container": "#005bc5",
+                    "secondary-fixed-dim": "#b9c7df",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "tertiary": "#005237",
+                    "tertiary-fixed": "#6ffbbe",
+                    "surface-container-lowest": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed-variant": "#3a485b",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-surface-variant": "#424753",
+                    "surface-container": "#eceef0",
+                    "on-primary-fixed": "#001a42",
+                    "secondary": "#515f74",
+                    "surface-variant": "#e0e3e5",
+                    "on-secondary-container": "#57657a",
+                    "secondary-container": "#d5e3fc",
+                    "tertiary-container": "#006d4a",
+                    "primary-fixed": "#d8e2ff",
+                    "surface-dim": "#d8dadc",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#d5e3fc",
+                    "on-secondary-fixed": "#0d1c2e",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e6e8ea",
+                    "on-primary-container": "#ccdaff",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-tertiary-container": "#65f2b5",
+                    "background": "#f7f9fb",
+                    "outline": "#727784",
+                    "surface": "#f7f9fb",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#002113",
+                    "inverse-surface": "#2d3133",
+                    "on-background": "#191c1e",
+                    "primary-fixed-dim": "#aec6ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": [
+                            "Manrope"
+                    ],
+                    "body": [
+                            "Inter"
+                    ],
+                    "label": [
+                            "Inter"
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+            color: #191c1e;
+        }
+        h1, h2, h3, h4, h5, h6, .font-headline {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface-bright/80 backdrop-blur-md sticky top-0 z-50 flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">psychology</span>
+<span class="text-xl font-bold text-primary font-headline">InterviewMentor</span>
+</div>
+<div class="flex items-center gap-4 hidden md:flex">
+<!-- Navigation for Web -->
+<nav class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium font-label uppercase tracking-wider" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium font-label uppercase tracking-wider" href="#">Browse</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium font-label uppercase tracking-wider" href="#">Interview</a>
+<a class="text-primary font-bold transition-colors text-sm font-label uppercase tracking-wider flex items-center gap-1" href="#">
+                    Reports
+                    <div class="h-1 w-1 bg-primary rounded-full absolute -bottom-2 left-1/2 transform -translate-x-1/2"></div>
+</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium font-label uppercase tracking-wider" href="#">Rankings</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-primary p-2 rounded-full hover:bg-surface-container-low transition-colors" title="Toggle Dark Mode"><span class="material-symbols-outlined">nights_stay</span></button><button class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-secondary-container overflow-hidden">
+<img alt="Profile Photo" class="w-full h-full object-cover" data-alt="close-up portrait of a young professional woman with dark hair smiling gently, soft natural lighting, soft background blur" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_K4ziYAVvQiGZkgNpE--XvLZtc1R2EyatQ7gJqsvt4DYMj8b-MMyXMPakc1dITQAF_XOkph-aHP1upKM5cbQjEEd41CqF5tGkfT8FL8-ZrekV8lXb0NBqo3kB1YPnhC1_SAyiRolekUjl0ObPpw-hBOGO0zFwKJc6HDNb6j3WoaiuvC1BDU3kzUJiR6UlrwUn_UdSi57h5HSfrP1GxH-22o5LCPc7AmJdjkykjazovzytBlP1GnzzF1kwaqo97T6w5JYWwd7E9Iw"/>
+</div>
+</div>
+</header>
+<main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mb-24 md:mb-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div>
+<p class="text-on-surface-variant font-label text-sm uppercase tracking-wider mb-2">Software Engineer - Front End</p>
+<h1 class="text-4xl md:text-5xl font-headline font-bold text-on-surface">Post-Interview Report</h1>
+<p class="text-on-surface-variant mt-2 max-w-2xl text-lg">Completed on October 24, 2023. Here is a detailed breakdown of your mock interview performance.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-3 rounded-xl bg-surface-container-lowest text-primary font-label font-semibold text-sm border border-outline-variant/30 hover:bg-surface-container-low transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined">share</span>
+                    Share Results
+                </button>
+<button class="px-6 py-3 rounded-xl bg-gradient-to-br from-primary to-primary-container text-on-primary font-label font-semibold text-sm hover:opacity-90 transition-opacity shadow-md flex items-center gap-2">
+<span class="material-symbols-outlined">dashboard</span>
+                    Back to Dashboard
+                </button>
+</div>
+</div>
+<!-- Main Bento Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Overall Score (Left Col) -->
+<div class="lg:col-span-4 bg-surface-container-lowest rounded-2xl p-8 flex flex-col items-center justify-center relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-b from-surface-container-lowest to-surface-container-low opacity-50"></div>
+<h2 class="text-xl font-headline font-bold text-on-surface mb-8 relative z-10 w-full text-center">Overall Score</h2>
+<div class="relative w-48 h-48 flex items-center justify-center z-10 mb-6">
+<!-- Outer Glow for Success -->
+<div class="absolute inset-0 bg-tertiary-fixed rounded-full blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+<!-- SVG Circle -->
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-secondary-container" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary transition-all duration-1000 ease-out" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-dasharray="283" stroke-dashoffset="42.45" stroke-width="8"></circle> <!-- 85% -->
+</svg>
+<div class="absolute flex flex-col items-center justify-center">
+<span class="text-6xl font-headline font-bold text-primary">85</span>
+<span class="text-on-surface-variant text-sm font-label uppercase tracking-widest mt-1">out of 100</span>
+</div>
+</div>
+<p class="text-center text-on-surface-variant relative z-10 mt-4 text-sm font-medium">
+                    Strong performance! You demonstrated excellent problem-solving skills but could improve conciseness.
+                </p>
+</div>
+<!-- Breakdown & Areas to Improve (Right Col) -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Performance Breakdown -->
+<div class="bg-surface-container-lowest rounded-2xl p-8">
+<h2 class="text-xl font-headline font-bold text-on-surface mb-6">Performance Breakdown</h2>
+<div class="space-y-6">
+<!-- Metric 1 -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-medium text-on-surface">Communication</span>
+<span class="font-bold text-primary">92/100</span>
+</div>
+<div class="h-2 w-full bg-secondary-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[92%]"></div>
+</div>
+</div>
+<!-- Metric 2 -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-medium text-on-surface">Relevance</span>
+<span class="font-bold text-primary">88/100</span>
+</div>
+<div class="h-2 w-full bg-secondary-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[88%]"></div>
+</div>
+</div>
+<!-- Metric 3 -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-medium text-on-surface">Technical Accuracy</span>
+<span class="font-bold text-primary">75/100</span>
+</div>
+<div class="h-2 w-full bg-secondary-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[75%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Top Areas to Improve -->
+<div class="bg-surface-container-low rounded-2xl p-8">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary">trending_up</span>
+</div>
+<h2 class="text-xl font-headline font-bold text-on-surface">Areas to Focus On</h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="bg-surface-container-lowest p-5 rounded-xl">
+<span class="text-error font-bold text-lg mb-1 block">01</span>
+<h3 class="font-semibold text-on-surface mb-2">Algorithm Optimization</h3>
+<p class="text-sm text-on-surface-variant">Your initial solutions were brute-force. Practice identifying optimal time complexities faster.</p>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl">
+<span class="text-error font-bold text-lg mb-1 block">02</span>
+<h3 class="font-semibold text-on-surface mb-2">STAR Method Structure</h3>
+<p class="text-sm text-on-surface-variant">Behavioral answers lacked the 'Result' phase. Ensure you close every story with measurable impact.</p>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl">
+<span class="text-error font-bold text-lg mb-1 block">03</span>
+<h3 class="font-semibold text-on-surface mb-2">System Design Depth</h3>
+<p class="text-sm text-on-surface-variant">Missed discussing database scaling strategies in the high-level architecture question.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Feedback Section -->
+<div class="mt-12">
+<h2 class="text-2xl font-headline font-bold text-on-surface mb-8">Detailed Question Feedback</h2>
+<div class="space-y-6">
+<!-- Question 1 Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-8 relative overflow-hidden">
+<!-- Score Indicator side -->
+<div class="md:w-32 flex-shrink-0 flex flex-col items-center justify-start md:border-r border-outline-variant/10 md:pr-8">
+<div class="w-16 h-16 rounded-full bg-tertiary-container/10 flex items-center justify-center mb-3">
+<span class="text-tertiary font-bold text-xl">9/10</span>
+</div>
+<span class="text-xs font-label uppercase tracking-wider text-on-surface-variant">Excellent</span>
+</div>
+<!-- Content -->
+<div class="flex-grow">
+<div class="mb-4">
+<span class="text-primary text-sm font-label font-bold uppercase tracking-wider mb-2 block">Question 1</span>
+<h3 class="text-lg font-semibold text-on-surface">"Tell me about a time you had to resolve a conflict with a senior team member."</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+<!-- User Answer -->
+<div class="bg-surface-container-low rounded-xl p-5 relative">
+<div class="absolute -top-3 left-4 bg-surface-container-lowest px-2 py-1 rounded-md text-xs font-bold text-on-surface-variant shadow-sm border border-outline-variant/10">Your Answer</div>
+<p class="text-sm text-on-surface-variant mt-2 leading-relaxed">
+                                    "I once disagreed with a senior dev on using Redux versus Context API. I felt Context was simpler for our use case. I built a quick prototype to show the performance difference, and after reviewing the code together, he agreed we could go with Context."
+                                </p>
+</div>
+<!-- Ideal Answer / Coach Notes -->
+<div class="bg-primary-container/5 rounded-xl p-5 relative border border-primary/10">
+<div class="absolute -top-3 left-4 bg-primary-container px-2 py-1 rounded-md text-xs font-bold text-on-primary-container shadow-sm">Coach's Ideal Structure</div>
+<p class="text-sm text-on-surface-variant mt-2 leading-relaxed">
+                                    Strong use of data (prototype) to prove a point. Next time, explicitly structure this using the STAR method. State the **Situation** (project deadlines), the **Task** (choosing state management), the **Action** (building prototype), and the **Result** (saved 2 days of dev time, team alignment).
+                                </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Question 2 Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-8 relative overflow-hidden">
+<!-- Score Indicator side -->
+<div class="md:w-32 flex-shrink-0 flex flex-col items-center justify-start md:border-r border-outline-variant/10 md:pr-8">
+<div class="w-16 h-16 rounded-full bg-error-container/30 flex items-center justify-center mb-3">
+<span class="text-error font-bold text-xl">5/10</span>
+</div>
+<span class="text-xs font-label uppercase tracking-wider text-on-surface-variant">Needs Work</span>
+</div>
+<!-- Content -->
+<div class="flex-grow">
+<div class="mb-4">
+<span class="text-primary text-sm font-label font-bold uppercase tracking-wider mb-2 block">Question 2</span>
+<h3 class="text-lg font-semibold text-on-surface">"Explain how you would design a URL shortener system like Bitly."</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+<!-- User Answer -->
+<div class="bg-surface-container-low rounded-xl p-5 relative">
+<div class="absolute -top-3 left-4 bg-surface-container-lowest px-2 py-1 rounded-md text-xs font-bold text-on-surface-variant shadow-sm border border-outline-variant/10">Your Answer</div>
+<p class="text-sm text-on-surface-variant mt-2 leading-relaxed">
+                                    "I would use a relational database to store the original URL and generate a random 7-character string for the short URL. I'd set up a Node.js server to handle incoming requests, look up the short URL in the DB, and redirect the user. I'd probably add Redis for caching."
+                                </p>
+</div>
+<!-- Ideal Answer / Coach Notes -->
+<div class="bg-primary-container/5 rounded-xl p-5 relative border border-primary/10">
+<div class="absolute -top-3 left-4 bg-primary-container px-2 py-1 rounded-md text-xs font-bold text-on-primary-container shadow-sm">Coach's Ideal Structure</div>
+<p class="text-sm text-on-surface-variant mt-2 leading-relaxed">
+                                    You missed crucial capacity estimations and scaling discussions. You should discuss: 1) Read/Write ratio (heavy reads), 2) Data capacity estimations, 3) Base62 encoding strategy for the short link generation instead of just "random string", and 4) Database partitioning strategies.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-[0_-4px_24px_rgba(25,28,30,0.04)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 rounded-t-3xl">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1.5 hover:text-[#005BC5] dark:hover:text-blue-300 transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1.5 hover:text-[#005BC5] dark:hover:text-blue-300 transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">work</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight">Browse</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1.5 hover:text-[#005BC5] dark:hover:text-blue-300 transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">mic</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight">Interview</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#f2f4f6] dark:bg-blue-900/30 text-[#005BC5] dark:text-blue-300 rounded-2xl px-4 py-1.5 scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1 filled">analytics</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight">Reports</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1.5 hover:text-[#005BC5] dark:hover:text-blue-300 transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">leaderboard</span>
+<span class="text-[10px] font-semibold font-inter tracking-tight">Rankings</span>
+</a>
+</nav>
+</body></html>
