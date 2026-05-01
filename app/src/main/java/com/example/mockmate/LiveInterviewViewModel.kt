@@ -58,9 +58,8 @@ interface InterviewBackendApi {
 }
 
 private object InterviewApiClient {
-    // For Android emulator: 10.0.2.2 maps to host machine's localhost
-    // For physical device: replace with your machine's local IP (e.g. 192.168.x.x)
-    private const val BACKEND_BASE_URL = "http://10.0.2.2:8000/"
+    // Production URL (hosted on Render)
+    private const val BACKEND_BASE_URL = "https://mockmate-api-8kbj.onrender.com/"
 
     val api: InterviewBackendApi by lazy {
         Retrofit.Builder()
