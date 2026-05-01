@@ -153,7 +153,7 @@ fun LiveInterviewScreen(
                                         color = MaterialTheme.colorScheme.outline
                                     )
                                     Text(
-                                        text = "InterviewMentor",
+                                        text = "Mockly",
                                         style = MaterialTheme.typography.titleSmall.copy(
                                             fontSize = 18.sp,
                                             lineHeight = 22.sp,

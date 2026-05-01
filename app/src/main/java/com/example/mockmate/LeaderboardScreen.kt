@@ -153,7 +153,7 @@ private fun LeaderboardTopAppBar() {
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "InterviewMentor",
+                    text = "Mockly",
                     style = MaterialTheme.typography.titleSmall.copy(
                         fontSize = 18.sp,
                         lineHeight = 22.sp,

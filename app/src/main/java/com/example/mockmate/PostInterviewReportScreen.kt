@@ -130,7 +130,7 @@ fun PostInterviewReportScreen(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "InterviewMentor",
+                            text = "Mockly",
                             style = MaterialTheme.typography.titleMedium.copy(
                                 fontSize = 18.sp, fontWeight = FontWeight.Bold
                             ),

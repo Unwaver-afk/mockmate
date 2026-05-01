@@ -170,7 +170,7 @@ private fun DashboardTopAppBar() {
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "InterviewMentor",
+                    text = "Mockly",
                     style = MaterialTheme.typography.headlineMedium.copy(
                         fontSize = 25.sp,
                         lineHeight = 30.sp,

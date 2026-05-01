@@ -49,22 +49,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import android.content.Context
 import com.example.mockmate.ui.theme.MocklyColors
 
 @Composable
 fun LoginScreen(navController: NavController) {
     val themeController = LocalThemeController.current
+    val context = LocalContext.current
+    var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var passwordVisible by remember { mutableStateOf(false) }
+    var college by remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
@@ -127,11 +128,27 @@ fun LoginScreen(navController: NavController) {
                     )
 
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        LoginLabel(text = "Full Name")
+                        LoginTextField(
+                            value = name,
+                            onValueChange = { name = it },
+                            placeholder = "Jane Doe",
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Filled.Psychology,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.outlineVariant
+                                )
+                            }
+                        )
+                    }
+
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         LoginLabel(text = "Email")
                         LoginTextField(
                             value = email,
                             onValueChange = { email = it },
-                            placeholder = "name@company.com",
+                            placeholder = "name@college.edu",
                             leadingIcon = {
                                 Icon(
                                     imageVector = Icons.Filled.Mail,
@@ -144,84 +161,32 @@ fun LoginScreen(navController: NavController) {
                     }
 
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            LoginLabel(text = "Password")
-                            Text(
-                                text = "Forgot Password?",
-                                style = MaterialTheme.typography.labelMedium.copy(fontSize = 12.sp),
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
+                        LoginLabel(text = "College / University")
                         LoginTextField(
-                            value = password,
-                            onValueChange = { password = it },
-                            placeholder = "Password",
+                            value = college,
+                            onValueChange = { college = it },
+                            placeholder = "e.g., IIT Delhi",
                             leadingIcon = {
                                 Icon(
                                     imageVector = Icons.Filled.Lock,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.outlineVariant
                                 )
-                            },
-                            trailingIcon = {
-                                IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                                    Icon(
-                                        imageVector = if (passwordVisible) {
-                                            Icons.Filled.VisibilityOff
-                                        } else {
-                                            Icons.Filled.Visibility
-                                        },
-                                        contentDescription = "Toggle password visibility",
-                                        tint = MaterialTheme.colorScheme.outline
-                                    )
-                                }
-                            },
-                            visualTransformation = if (passwordVisible) {
-                                VisualTransformation.None
-                            } else {
-                                PasswordVisualTransformation()
-                            },
-                            keyboardType = KeyboardType.Password
+                            }
                         )
                     }
 
-                    SignInButton(onClick = { navController.navigateToDashboard() })
-                    LoginDivider()
-
-                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        SocialButton(
-                            text = "Google",
-                            iconRes = R.drawable.ic_google,
-                            modifier = Modifier.weight(1f),
-                            onClick = { navController.navigateToDashboard() }
-                        )
-                        SocialButton(
-                            text = "LinkedIn",
-                            iconRes = R.drawable.ic_linkedin,
-                            modifier = Modifier.weight(1f),
-                            onClick = { navController.navigateToDashboard() }
-                        )
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(20.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = "Don't have an account?",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                TextButton(onClick = { navController.navigateToDashboard() }) {
-                    Text(
-                        text = "Sign Up",
-                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                    SignInButton(onClick = {
+                        val sharedPref = context.getSharedPreferences("MocklyPrefs", Context.MODE_PRIVATE)
+                        with (sharedPref.edit()) {
+                            putBoolean("isLoggedIn", true)
+                            putString("userName", name)
+                            putString("userEmail", email)
+                            putString("userCollege", college)
+                            apply()
+                        }
+                        navController.navigateToDashboard()
+                    })
                 }
             }
         }
@@ -238,9 +203,8 @@ private fun BrandHeader() {
             tint = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = Modifier.height(14.dp))
-        // Stitch uses gradient text: bg-gradient-to-br from-primary to-primary-container bg-clip-text
         Text(
-            text = "PrepMaster AI",
+            text = "Mockly",
             style = MaterialTheme.typography.headlineMedium.copy(
                 fontSize = 32.sp,
                 lineHeight = 38.sp,
@@ -284,7 +248,6 @@ private fun LoginTextField(
     leadingIcon: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     trailingIcon: (@Composable () -> Unit)? = null,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
     OutlinedTextField(
@@ -302,7 +265,6 @@ private fun LoginTextField(
                 color = MaterialTheme.colorScheme.outlineVariant
             )
         },
-        visualTransformation = visualTransformation,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
@@ -350,74 +312,7 @@ private fun SignInButton(onClick: () -> Unit) {
     }
 }
 
-@Composable
-private fun LoginDivider() {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .height(4.dp)
-                .clip(MaterialTheme.shapes.extraLarge)
-                .background(MaterialTheme.colorScheme.surfaceContainerLow)
-        )
-        Text(
-            text = "OR CONTINUE WITH",
-            modifier = Modifier.padding(horizontal = 12.dp),
-            style = MaterialTheme.typography.labelMedium.copy(fontSize = 11.sp),
-            color = MaterialTheme.colorScheme.outline
-        )
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .height(4.dp)
-                .clip(MaterialTheme.shapes.extraLarge)
-                .background(MaterialTheme.colorScheme.surfaceContainerLow)
-        )
-    }
-}
 
-@Composable
-private fun SocialButton(
-    text: String,
-    iconRes: Int,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-) {
-    OutlinedButton(
-        onClick = onClick,
-        modifier = modifier
-            .height(48.dp)
-            .background(
-                color = MaterialTheme.colorScheme.surfaceContainerLowest,
-                shape = RoundedCornerShape(12.dp)
-            )
-            .border(
-                width = 1.dp,
-                color = MocklyColors.OutlineVariant.copy(alpha = 0.35f),
-                shape = RoundedCornerShape(12.dp)
-            ),
-        shape = RoundedCornerShape(12.dp),
-        colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
-            contentColor = MaterialTheme.colorScheme.onSurface
-        ),
-        border = null
-    ) {
-        Image(
-            painter = painterResource(id = iconRes),
-            contentDescription = null,
-            modifier = Modifier.size(18.dp)
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(
-            text = text,
-            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
-        )
-    }
-}
 
 private fun NavController.navigateToDashboard() {
     navigate("dashboard") {

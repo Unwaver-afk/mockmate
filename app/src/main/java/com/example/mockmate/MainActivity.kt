@@ -1,5 +1,6 @@
 package com.example.mockmate
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -68,6 +69,9 @@ import org.json.JSONObject
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val sharedPref = getSharedPreferences("MocklyPrefs", Context.MODE_PRIVATE)
+        val isLoggedIn = sharedPref.getBoolean("isLoggedIn", false)
+
         setContent {
             var isDarkTheme by remember { mutableStateOf(false) }
             CompositionLocalProvider(
@@ -77,7 +81,7 @@ class MainActivity : ComponentActivity() {
                 )
             ) {
                 MocklyTheme(darkTheme = isDarkTheme) {
-                    MocklyApp()
+                    MocklyApp(isLoggedIn = isLoggedIn)
                 }
             }
         }
@@ -86,6 +90,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun MocklyApp(
+    isLoggedIn: Boolean = false,
     navController: NavHostController = rememberNavController(),
     interviewViewModel: InterviewViewModel = viewModel()
 ) {
@@ -93,7 +98,10 @@ private fun MocklyApp(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        NavHost(navController = navController, startDestination = "login") {
+        NavHost(
+            navController = navController,
+            startDestination = if (isLoggedIn) "dashboard" else "login"
+        ) {
             composable("login") {
                 LoginScreen(navController = navController)
             }
