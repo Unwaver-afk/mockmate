@@ -72,7 +72,7 @@ fun LoginScreen(navController: NavController) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        // Floating dark mode toggle (top-right) — per Stitch design
+        // Floating dark mode toggle (top-right)
         Surface(
             onClick = themeController.toggle,
             modifier = Modifier
@@ -165,7 +165,7 @@ fun LoginScreen(navController: NavController) {
                         LoginTextField(
                             value = college,
                             onValueChange = { college = it },
-                            placeholder = "e.g., IIT Delhi",
+                            placeholder = "e.g., JIIT NOIDA",
                             leadingIcon = {
                                 Icon(
                                     imageVector = Icons.Filled.Lock,

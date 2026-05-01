@@ -36,6 +36,9 @@ import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -52,6 +55,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -61,6 +65,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.platform.LocalContext
+import android.content.Context
+import androidx.compose.foundation.clickable
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontStyle
@@ -92,6 +99,13 @@ private data class HistoryItem(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(navController: NavController) {
+    val context = LocalContext.current
+    val sharedPref = context.getSharedPreferences("MocklyPrefs", Context.MODE_PRIVATE)
+    val userName = sharedPref.getString("userName", "User") ?: "User"
+    val userEmail = sharedPref.getString("userEmail", "") ?: ""
+    val userCollege = sharedPref.getString("userCollege", "") ?: ""
+    val firstName = userName.split(" ").firstOrNull() ?: "User"
+
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = listOf(
         DashboardTab("Home", Icons.Default.GridView, "dashboard"),
@@ -103,7 +117,7 @@ fun DashboardScreen(navController: NavController) {
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
-        topBar = { DashboardTopAppBar() },
+        topBar = { DashboardTopAppBar(navController, userName, userEmail, userCollege) },
         bottomBar = {
             NavigationBar(
                 containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
@@ -144,7 +158,7 @@ fun DashboardScreen(navController: NavController) {
             contentPadding = PaddingValues(start = 20.dp, top = 26.dp, end = 20.dp, bottom = 132.dp),
             verticalArrangement = Arrangement.spacedBy(28.dp)
         ) {
-            item { HeroBlock() }
+            item { HeroBlock(firstName = firstName) }
             item { StreakBadge() }
             item { RecommendedModuleCard(onStart = { navController.navigate("setup") }) }
             item { AverageScoreCard() }
@@ -157,8 +171,12 @@ fun DashboardScreen(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun DashboardTopAppBar() {
+private fun DashboardTopAppBar(navController: NavController, userName: String, userEmail: String, userCollege: String) {
     val themeController = LocalThemeController.current
+    val context = LocalContext.current
+    var showMenu by remember { mutableStateOf(false) }
+    val initial = userName.firstOrNull()?.uppercase() ?: "U"
+
     TopAppBar(
         title = {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -196,19 +214,49 @@ private fun DashboardTopAppBar() {
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
-            Box(
-                modifier = Modifier
-                    .padding(end = 12.dp)
-                    .size(42.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.inverseSurface),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "A",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.inverseOnSurface
-                )
+            Box(modifier = Modifier.padding(end = 12.dp)) {
+                Box(
+                    modifier = Modifier
+                        .size(42.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.inverseSurface)
+                        .clickable { showMenu = true },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = initial,
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.inverseOnSurface
+                    )
+                }
+                
+                DropdownMenu(
+                    expanded = showMenu,
+                    onDismissRequest = { showMenu = false }
+                ) {
+                    Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                        Text(text = userName, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodyLarge)
+                        if (userEmail.isNotBlank()) {
+                            Text(text = userEmail, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                        if (userCollege.isNotBlank()) {
+                            Text(text = userCollege, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                    }
+                    HorizontalDivider()
+                    DropdownMenuItem(
+                        text = { Text("Logout", color = MaterialTheme.colorScheme.error) },
+                        onClick = {
+                            showMenu = false
+                            val prefs = context.getSharedPreferences("MocklyPrefs", Context.MODE_PRIVATE)
+                            prefs.edit().clear().apply()
+                            navController.navigate("login") {
+                                popUpTo(0) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        }
+                    )
+                }
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -218,10 +266,10 @@ private fun DashboardTopAppBar() {
 }
 
 @Composable
-private fun HeroBlock() {
+private fun HeroBlock(firstName: String) {
     Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Text(
-            text = "Welcome back, Alex.",
+            text = "Welcome back, $firstName.",
             style = MaterialTheme.typography.displayMedium.copy(
                 fontSize = 42.sp,
                 lineHeight = 48.sp,
