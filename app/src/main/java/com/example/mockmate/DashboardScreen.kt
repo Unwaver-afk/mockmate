@@ -109,7 +109,6 @@ fun DashboardScreen(navController: NavController) {
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = listOf(
         DashboardTab("Home", Icons.Default.GridView, "dashboard"),
-        DashboardTab("Browse", Icons.Default.Explore, null),
         DashboardTab("Interview", Icons.Default.Mic, "setup"),
         DashboardTab("Reports", Icons.Default.Assessment, "report"),
         DashboardTab("Rankings", Icons.Default.EmojiEvents, "leaderboard")

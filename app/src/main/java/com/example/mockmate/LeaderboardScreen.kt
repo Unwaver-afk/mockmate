@@ -203,7 +203,6 @@ private fun LeaderboardTopAppBar() {
 private fun LeaderboardBottomNavigation(navController: NavController) {
     val tabs = listOf(
         RankingTab("Home", Icons.Default.Home, "dashboard"),
-        RankingTab("Browse", Icons.Default.Explore, null),
         RankingTab("Interview", Icons.Default.Mic, "setup"),
         RankingTab("Reports", Icons.Default.Assessment, "report"),
         RankingTab("Rankings", Icons.Default.EmojiEvents, "leaderboard")
@@ -375,8 +374,9 @@ private fun LeaderboardRow(user: LeaderboardUser) {
                             1f to if (user.isCurrentUser) YouTint else MaterialTheme.colorScheme.surfaceContainerLowest
                         )
                     } else {
+                        val fallbackColor = if (user.isCurrentUser) YouTint else MaterialTheme.colorScheme.surfaceContainerLowest
                         androidx.compose.ui.graphics.Brush.horizontalGradient(
-                            listOf(if (user.isCurrentUser) YouTint else MaterialTheme.colorScheme.surfaceContainerLowest)
+                            listOf(fallbackColor, fallbackColor)
                         )
                     }
                 )

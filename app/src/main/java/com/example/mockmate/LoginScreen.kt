@@ -177,15 +177,19 @@ fun LoginScreen(navController: NavController) {
                     }
 
                     SignInButton(onClick = {
-                        val sharedPref = context.getSharedPreferences("MocklyPrefs", Context.MODE_PRIVATE)
-                        with (sharedPref.edit()) {
-                            putBoolean("isLoggedIn", true)
-                            putString("userName", name)
-                            putString("userEmail", email)
-                            putString("userCollege", college)
-                            apply()
+                        if (name.isBlank() || email.isBlank() || college.isBlank()) {
+                            android.widget.Toast.makeText(context, "Please fill out all fields", android.widget.Toast.LENGTH_SHORT).show()
+                        } else {
+                            val sharedPref = context.getSharedPreferences("MocklyPrefs", Context.MODE_PRIVATE)
+                            with (sharedPref.edit()) {
+                                putBoolean("isLoggedIn", true)
+                                putString("userName", name)
+                                putString("userEmail", email)
+                                putString("userCollege", college)
+                                apply()
+                            }
+                            navController.navigateToDashboard()
                         }
-                        navController.navigateToDashboard()
                     })
                 }
             }
