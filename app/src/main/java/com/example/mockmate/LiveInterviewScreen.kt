@@ -1,4 +1,14 @@
 package com.example.mockmate
+
+import android.Manifest
+import android.content.Intent
+import android.os.Bundle
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -6,6 +16,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,11 +38,13 @@ import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.Keyboard
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.MicOff
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.StopCircle
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -47,6 +60,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -61,13 +75,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.mockmate.ui.theme.MocklyColors
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -79,6 +96,7 @@ fun LiveInterviewScreen(
     interviewType: String,
     viewModel: LiveInterviewViewModel = viewModel()
 ) {
+    val context = LocalContext.current
     val themeController = LocalThemeController.current
     val messages by viewModel.messages.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
@@ -86,8 +104,85 @@ fun LiveInterviewScreen(
     val questionNumber by viewModel.questionNumber.collectAsState()
     var input by remember { mutableStateOf("") }
     var showEndDialog by remember { mutableStateOf(false) }
-    var textMode by remember { mutableStateOf(true) }
+    var isEndingInterview by remember { mutableStateOf(false) }
+    var isListening by remember { mutableStateOf(false) }
+    var hasAudioPermission by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
+
+    // Permission launcher for RECORD_AUDIO
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        hasAudioPermission = granted
+        if (!granted) {
+            Toast.makeText(context, "Microphone permission is needed for voice input", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // SpeechRecognizer setup
+    val speechRecognizer = remember { SpeechRecognizer.createSpeechRecognizer(context) }
+    val speechIntent = remember {
+        Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
+            putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
+        }
+    }
+
+    DisposableEffect(speechRecognizer) {
+        speechRecognizer.setRecognitionListener(object : RecognitionListener {
+            override fun onReadyForSpeech(params: Bundle?) {}
+            override fun onBeginningOfSpeech() {}
+            override fun onRmsChanged(rmsdB: Float) {}
+            override fun onBufferReceived(buffer: ByteArray?) {}
+            override fun onEndOfSpeech() {
+                isListening = false
+            }
+            override fun onError(error: Int) {
+                isListening = false
+                // Error 7 = no speech detected, 8 = recognizer busy — don't show toast for these
+                if (error != SpeechRecognizer.ERROR_NO_MATCH && error != SpeechRecognizer.ERROR_SPEECH_TIMEOUT) {
+                    Toast.makeText(context, "Voice input error. Please try again.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onResults(results: Bundle?) {
+                val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                if (!matches.isNullOrEmpty()) {
+                    input = if (input.isBlank()) matches[0] else "$input ${matches[0]}"
+                }
+                isListening = false
+            }
+            override fun onPartialResults(partialResults: Bundle?) {
+                val matches = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                if (!matches.isNullOrEmpty()) {
+                    // Show partial results as live preview (will be replaced by final results)
+                }
+            }
+            override fun onEvent(eventType: Int, params: Bundle?) {}
+        })
+        onDispose {
+            speechRecognizer.stopListening()
+            speechRecognizer.destroy()
+        }
+    }
+
+    // Function to toggle speech recognition
+    val toggleListening: () -> Unit = {
+        if (isListening) {
+            speechRecognizer.stopListening()
+            isListening = false
+        } else {
+            if (!SpeechRecognizer.isRecognitionAvailable(context)) {
+                Toast.makeText(context, "Speech recognition not available on this device", Toast.LENGTH_SHORT).show()
+            } else if (!hasAudioPermission) {
+                permissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+            } else {
+                isListening = true
+                speechRecognizer.startListening(speechIntent)
+            }
+        }
+    }
 
     LaunchedEffect(company, role, difficulty, interviewType) {
         viewModel.startSession(company, role, difficulty, interviewType)
@@ -102,9 +197,11 @@ fun LiveInterviewScreen(
                 TextButton(
                     onClick = {
                         showEndDialog = false
+                        isEndingInterview = true
                         coroutineScope.launch {
                             val report = viewModel.endInterview()
                             SharedReportHolder.reportJson = report
+                            isEndingInterview = false
                             navController.navigate("post_report")
                         }
                     }
@@ -162,19 +259,16 @@ fun LiveInterviewScreen(
                                     )
                                 }
                             }
-                            IconButton(
-                                modifier = Modifier.align(Alignment.Center),
-                                onClick = themeController.toggle
-                            ) {
-                                Icon(
-                                    imageVector = if (themeController.isDark) Icons.Default.LightMode else Icons.Default.DarkMode,
-                                    contentDescription = "Toggle dark mode",
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            }
                         }
                     },
                     actions = {
+                        IconButton(onClick = themeController.toggle) {
+                            Icon(
+                                imageVector = if (themeController.isDark) Icons.Default.LightMode else Icons.Default.DarkMode,
+                                contentDescription = "Toggle dark mode",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
                         Surface(
                             onClick = { showEndDialog = true },
                             shape = MaterialTheme.shapes.extraLarge,
@@ -209,11 +303,15 @@ fun LiveInterviewScreen(
         },
         bottomBar = {
             BottomInputRow(
-                textMode = textMode,
+                isListening = isListening,
                 input = input,
                 onInputChange = { input = it },
-                onToggleMode = { textMode = !textMode },
+                onToggleMic = toggleListening,
                 onSend = {
+                    if (isListening) {
+                        speechRecognizer.stopListening()
+                        isListening = false
+                    }
                     viewModel.sendMessage(input)
                     input = ""
                 }
@@ -251,9 +349,13 @@ fun LiveInterviewScreen(
                     }
                 }
             }
-            MicControl()
             Spacer(modifier = Modifier.height(14.dp))
         }
+    }
+
+    // Full-screen loading overlay while generating the report
+    if (isEndingInterview) {
+        EndingInterviewOverlay()
     }
 }
 
@@ -446,143 +548,302 @@ private fun AnimatedDot(delayMillis: Int) {
 }
 
 @Composable
-private fun MicControl() {
-    val transition = rememberInfiniteTransition(label = "mic-pulse")
+private fun EndingInterviewOverlay() {
+    val transition = rememberInfiniteTransition(label = "ending-pulse")
     val pulse by transition.animateFloat(
-        initialValue = 1f,
-        targetValue = 1.5f,
+        initialValue = 0.85f,
+        targetValue = 1.15f,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 1200),
             repeatMode = RepeatMode.Reverse
         ),
-        label = "pulse-outer"
+        label = "icon-pulse"
     )
-    val pulseInner by transition.animateFloat(
-        initialValue = 1f,
-        targetValue = 1.25f,
+    val dotAlpha by transition.animateFloat(
+        initialValue = 0.3f,
+        targetValue = 1f,
         animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1000, delayMillis = 200),
+            animation = tween(durationMillis = 800),
             repeatMode = RepeatMode.Reverse
         ),
-        label = "pulse-inner"
+        label = "dot-pulse"
     )
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.size(100.dp)) {
-            // Outer ripple
-            Box(
-                modifier = Modifier
-                    .size(80.dp)
-                    .scale(pulse)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.15f))
-            )
-            // Inner ripple
-            Box(
-                modifier = Modifier
-                    .size(80.dp)
-                    .scale(pulseInner)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.25f))
-            )
-            // Main gradient button
-            Box(
-                modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape)
-                    .background(
-                        Brush.linearGradient(
-                            listOf(
-                                MaterialTheme.colorScheme.primary,
-                                MaterialTheme.colorScheme.primaryContainer
-                            )
-                        )
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Mic,
-                    contentDescription = "Tap to speak",
-                    modifier = Modifier.size(32.dp),
-                    tint = MaterialTheme.colorScheme.onPrimary
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.95f)),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(28.dp)
+        ) {
+            // Pulsing icon with gradient ring
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.size(120.dp)) {
+                Box(
+                    modifier = Modifier
+                        .size(120.dp)
+                        .scale(pulse)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
                 )
+                Box(
+                    modifier = Modifier
+                        .size(90.dp)
+                        .clip(CircleShape)
+                        .background(
+                            Brush.linearGradient(
+                                listOf(
+                                    MaterialTheme.colorScheme.primary,
+                                    MaterialTheme.colorScheme.primaryContainer
+                                )
+                            )
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Psychology,
+                        contentDescription = null,
+                        modifier = Modifier.size(44.dp),
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }
+
+            Text(
+                text = "Analyzing Your Performance",
+                style = MaterialTheme.typography.headlineSmall.copy(
+                    fontWeight = FontWeight.Bold
+                ),
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            Text(
+                text = "Mockly is reviewing your answers and\npreparing a detailed performance report…",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    lineHeight = 22.sp
+                ),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center
+            )
+
+            // Animated loading dots
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                LoadingDot(delayMillis = 0)
+                LoadingDot(delayMillis = 160)
+                LoadingDot(delayMillis = 320)
             }
         }
-        Spacer(modifier = Modifier.height(6.dp))
-        Text(
-            text = "Tap to Speak",
-            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold),
-            color = MaterialTheme.colorScheme.primary
-        )
     }
 }
 
 @Composable
+private fun LoadingDot(delayMillis: Int) {
+    val transition = rememberInfiniteTransition(label = "loading-dot-$delayMillis")
+    val scale by transition.animateFloat(
+        initialValue = 0.6f,
+        targetValue = 1.2f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 600, delayMillis = delayMillis),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "dot-scale"
+    )
+    val alpha by transition.animateFloat(
+        initialValue = 0.3f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 600, delayMillis = delayMillis),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "dot-alpha"
+    )
+    Box(
+        modifier = Modifier
+            .size(10.dp)
+            .scale(scale)
+            .alpha(alpha)
+            .clip(CircleShape)
+            .background(
+                Brush.linearGradient(
+                    listOf(
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.primaryContainer
+                    )
+                )
+            )
+    )
+}
+
+@Composable
 private fun BottomInputRow(
-    textMode: Boolean,
+    isListening: Boolean,
     input: String,
     onInputChange: (String) -> Unit,
-    onToggleMode: () -> Unit,
+    onToggleMic: () -> Unit,
     onSend: () -> Unit
 ) {
-    // Stitch: bg-surface-container-low rounded-2xl with keyboard + text + send
     Surface(
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.surfaceBright.copy(alpha = 0.95f),
         shadowElevation = 8.dp
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 14.dp, vertical = 10.dp)
-                .background(MaterialTheme.colorScheme.surfaceContainerLow, RoundedCornerShape(16.dp))
-                .padding(4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            IconButton(onClick = onToggleMode) {
-                Icon(
-                    imageVector = if (textMode) Icons.Default.Mic else Icons.Default.Keyboard,
-                    contentDescription = "Toggle input mode",
-                    modifier = Modifier.size(20.dp),
-                    tint = MaterialTheme.colorScheme.secondary
-                )
+        Column {
+            // Listening indicator bar
+            AnimatedVisibility(visible = isListening) {
+                ListeningIndicator()
             }
-            TextField(
-                value = input,
-                onValueChange = onInputChange,
-                modifier = Modifier.weight(1f),
-                singleLine = true,
-                placeholder = {
-                    Text(
-                        text = "Or type your response here...",
-                        style = MaterialTheme.typography.bodyMedium.copy(fontSize = 15.sp),
-                        color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 14.dp, vertical = 10.dp)
+                    .background(
+                        if (isListening) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.15f)
+                        else MaterialTheme.colorScheme.surfaceContainerLow,
+                        RoundedCornerShape(16.dp)
                     )
-                },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    cursorColor = MaterialTheme.colorScheme.primary,
-                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface
-                )
-            )
-            Surface(
-                onClick = onSend,
-                modifier = Modifier.size(44.dp),
-                shape = RoundedCornerShape(12.dp),
-                color = MaterialTheme.colorScheme.primaryContainer
+                    .then(
+                        if (isListening) Modifier.border(
+                            1.dp,
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.4f),
+                            RoundedCornerShape(16.dp)
+                        ) else Modifier
+                    )
+                    .padding(4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
+                // Mic button with pulsing effect when listening
                 Box(contentAlignment = Alignment.Center) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.Send,
-                        contentDescription = "Send",
-                        modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
+                    if (isListening) {
+                        val pulseTransition = rememberInfiniteTransition(label = "mic-pulse")
+                        val pulseScale by pulseTransition.animateFloat(
+                            initialValue = 1f,
+                            targetValue = 1.5f,
+                            animationSpec = infiniteRepeatable(
+                                animation = tween(800),
+                                repeatMode = RepeatMode.Reverse
+                            ),
+                            label = "mic-pulse-scale"
+                        )
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .scale(pulseScale)
+                                .clip(CircleShape)
+                                .background(MaterialTheme.colorScheme.error.copy(alpha = 0.15f))
+                        )
+                    }
+                    IconButton(onClick = onToggleMic) {
+                        Icon(
+                            imageVector = if (isListening) Icons.Default.MicOff else Icons.Default.Mic,
+                            contentDescription = if (isListening) "Stop listening" else "Start voice input",
+                            modifier = Modifier.size(22.dp),
+                            tint = if (isListening) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.secondary
+                        )
+                    }
                 }
+                TextField(
+                    value = input,
+                    onValueChange = onInputChange,
+                    modifier = Modifier.weight(1f),
+                    singleLine = false,
+                    maxLines = 3,
+                    placeholder = {
+                        Text(
+                            text = if (isListening) "Listening… speak now" else "Type or tap 🎤 to speak...",
+                            style = MaterialTheme.typography.bodyMedium.copy(fontSize = 15.sp),
+                            color = if (isListening) MaterialTheme.colorScheme.primary.copy(alpha = 0.8f)
+                                   else MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f)
+                        )
+                    },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        cursorColor = MaterialTheme.colorScheme.primary,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface
+                    )
+                )
+                Surface(
+                    onClick = onSend,
+                    modifier = Modifier.size(44.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    color = MaterialTheme.colorScheme.primaryContainer
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.Send,
+                            contentDescription = "Send",
+                            modifier = Modifier.size(20.dp),
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ListeningIndicator() {
+    val transition = rememberInfiniteTransition(label = "listening-bar")
+    val barAlpha by transition.animateFloat(
+        initialValue = 0.4f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(600),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "bar-alpha"
+    )
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 14.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(8.dp)
+                .clip(CircleShape)
+                .alpha(barAlpha)
+                .background(MaterialTheme.colorScheme.error)
+        )
+        Text(
+            text = "Listening…",
+            style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
+            color = MaterialTheme.colorScheme.error.copy(alpha = barAlpha)
+        )
+        // Animated waveform dots
+        Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
+            repeat(5) { index ->
+                val dotTransition = rememberInfiniteTransition(label = "wave-$index")
+                val dotHeight by dotTransition.animateFloat(
+                    initialValue = 4f,
+                    targetValue = 14f,
+                    animationSpec = infiniteRepeatable(
+                        animation = tween(400, delayMillis = index * 80),
+                        repeatMode = RepeatMode.Reverse
+                    ),
+                    label = "wave-dot-$index"
+                )
+                Box(
+                    modifier = Modifier
+                        .width(3.dp)
+                        .height(dotHeight.dp)
+                        .clip(RoundedCornerShape(2.dp))
+                        .background(
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
+                        )
+                )
             }
         }
     }
