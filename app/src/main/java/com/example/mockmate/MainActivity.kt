@@ -66,6 +66,14 @@ import com.example.mockmate.ui.theme.MocklyTheme
 import org.json.JSONArray
 import org.json.JSONObject
 
+/**
+ * Singleton to safely pass the large report JSON between screens
+ * without encoding it in a navigation URL parameter.
+ */
+object SharedReportHolder {
+    var reportJson: String = ""
+}
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -141,13 +149,10 @@ private fun MocklyApp(
                     reportJson = interviewViewModel.reportJson()
                 )
             }
-            composable(
-                route = "post_report/{reportJson}",
-                arguments = listOf(navArgument("reportJson") { type = NavType.StringType })
-            ) { backStackEntry ->
+            composable("post_report") {
                 PostInterviewReportScreen(
                     navController = navController,
-                    backStackEntry = backStackEntry
+                    reportJson = SharedReportHolder.reportJson
                 )
             }
         }

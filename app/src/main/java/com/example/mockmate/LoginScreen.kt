@@ -132,7 +132,7 @@ fun LoginScreen(navController: NavController) {
                         LoginTextField(
                             value = name,
                             onValueChange = { name = it },
-                            placeholder = "Jane Doe",
+                            placeholder = "Prakhar Agnihotri",
                             leadingIcon = {
                                 Icon(
                                     imageVector = Icons.Filled.Psychology,
@@ -148,7 +148,7 @@ fun LoginScreen(navController: NavController) {
                         LoginTextField(
                             value = email,
                             onValueChange = { email = it },
-                            placeholder = "name@college.edu",
+                            placeholder = "enroll@college.mail.ac.in",
                             leadingIcon = {
                                 Icon(
                                     imageVector = Icons.Filled.Mail,

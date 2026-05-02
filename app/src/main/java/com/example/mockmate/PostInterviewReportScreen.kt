@@ -1,5 +1,7 @@
 package com.example.mockmate
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -33,7 +35,6 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Psychology
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material3.Card
@@ -63,10 +64,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import org.json.JSONArray
 import org.json.JSONObject
@@ -95,18 +96,6 @@ data class AnswerFeedback(
     val score: Int
 )
 
-@Composable
-fun PostInterviewReportScreen(
-    navController: NavController,
-    backStackEntry: NavBackStackEntry
-) {
-    val reportJson = backStackEntry.arguments?.getString("reportJson").orEmpty()
-    PostInterviewReportScreen(
-        navController = navController,
-        reportJson = reportJson
-    )
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PostInterviewReportScreen(
@@ -115,6 +104,7 @@ fun PostInterviewReportScreen(
 ) {
     val report = remember(reportJson) { parseReport(reportJson) }
     val themeController = LocalThemeController.current
+    val context = LocalContext.current
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -146,9 +136,6 @@ fun PostInterviewReportScreen(
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
-                    IconButton(onClick = {}) {
-                        Icon(Icons.Default.Settings, "Settings", tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background
@@ -167,6 +154,7 @@ fun PostInterviewReportScreen(
             item {
                 ReportHeader(
                     report = report,
+                    context = context,
                     onBackToDashboard = {
                         navController.navigate("dashboard") {
                             popUpTo(0)
@@ -195,6 +183,7 @@ fun PostInterviewReportScreen(
 @Composable
 private fun ReportHeader(
     report: ReportData,
+    context: Context,
     onBackToDashboard: () -> Unit
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -220,7 +209,7 @@ private fun ReportHeader(
         Spacer(modifier = Modifier.height(8.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Surface(
-                onClick = {},
+                onClick = { shareReport(context, report) },
                 modifier = Modifier.weight(1f),
                 shape = RoundedCornerShape(12.dp),
                 color = MaterialTheme.colorScheme.surfaceContainerLowest,
@@ -552,3 +541,37 @@ private const val defaultReportJson = """
   "technical": 75
 }
 """
+
+private fun shareReport(context: Context, report: ReportData) {
+    val focusText = report.focus.joinToString("\n") { "  • ${it.title}: ${it.description}" }
+    val shareText = buildString {
+        appendLine("🎯 Mockly Interview Report")
+        appendLine("━━━━━━━━━━━━━━━━━━━━━━━━━")
+        appendLine("📋 ${report.roleCompany}")
+        appendLine("📅 ${report.date}")
+        appendLine()
+        appendLine("🏆 Overall Score: ${report.score}/100")
+        appendLine()
+        appendLine("📊 Performance Breakdown:")
+        appendLine("  💬 Communication: ${report.communication}/100")
+        appendLine("  🎯 Relevance: ${report.relevance}/100")
+        appendLine("  ⚙️ Technical: ${report.technical}/100")
+        appendLine()
+        appendLine("📝 Summary: ${report.summary}")
+        appendLine()
+        appendLine("🔍 Focus Areas:")
+        appendLine(focusText)
+        appendLine()
+        appendLine("━━━━━━━━━━━━━━━━━━━━━━━━━")
+        appendLine("Powered by Mockly — AI Mock Interview Coach")
+    }
+
+    val sendIntent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, shareText)
+        putExtra(Intent.EXTRA_SUBJECT, "Mockly Interview Report — ${report.roleCompany}")
+        type = "text/plain"
+    }
+    val chooser = Intent.createChooser(sendIntent, "Share your report")
+    context.startActivity(chooser)
+}

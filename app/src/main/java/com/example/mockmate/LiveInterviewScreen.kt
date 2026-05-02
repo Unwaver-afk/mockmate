@@ -1,6 +1,4 @@
 package com.example.mockmate
-
-import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -106,7 +104,8 @@ fun LiveInterviewScreen(
                         showEndDialog = false
                         coroutineScope.launch {
                             val report = viewModel.endInterview()
-                            navController.navigate("post_report/${Uri.encode(report)}")
+                            SharedReportHolder.reportJson = report
+                            navController.navigate("post_report")
                         }
                     }
                 ) {

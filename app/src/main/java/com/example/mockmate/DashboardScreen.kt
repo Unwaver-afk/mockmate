@@ -30,7 +30,6 @@ import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Psychology
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SmartToy
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.filled.Whatshot
@@ -202,14 +201,6 @@ private fun DashboardTopAppBar(navController: NavController, userName: String, u
                 Icon(
                     imageVector = if (themeController.isDark) Icons.Default.LightMode else Icons.Default.DarkMode,
                     contentDescription = "Toggle dark mode",
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
-            IconButton(onClick = {}) {
-                Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "Settings",
-                    modifier = Modifier.size(31.dp),
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
